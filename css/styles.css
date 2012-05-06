@@ -1,0 +1,19 @@
+/* 
+    Document   : styles
+    Created on : May 6, 2012, 3:07:06 PM
+    Author     : jgajula
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+    display: block;
+}
+
+.albumEntry{ box-shadow: 3px 3px 4px #000; }
+.albumEntry:hover {border: 1px solid white;}
