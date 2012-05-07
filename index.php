@@ -2,6 +2,7 @@
 <html>
     <head>
         <link href="/css/styles.css" rel="stylesheet" type="text/css">
+        <link media="screen" rel="stylesheet" href="css/colorbox.css" />
     </head>
     
 <body style="margin: 0px;font: 12px/18px 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;
@@ -41,7 +42,7 @@ line-height: 18px;">
                             <img src="/images/twitter_logo.png"/>
                         </div>
                         <div id="onTheFlyWrapper">
-                            <span>ON THE FLY</span>
+                            <span><a class='inline' href="#onTheFlyContentWrapper">ON THE FLY</a></span>
                         </div>
                     </div>
                     <div id="imageGalleryWrapper">
@@ -77,6 +78,81 @@ line-height: 18px;">
                 
             </div>
         </div>
+        <div style='display:none'>
+		<div id='onTheFlyContentWrapper' style='padding:10px; background:#fff;'>
+                    <div id="onTheFlyContent" style="width: 350px;margin: auto;">
+                        <form name="onTheFlyForm" id="onTheFlyForm" action="#" method="POST">
+                            <div id="flyFirstRow">
+                                <div class="firstColumn">
+                                    First Name: 
+                                </div>
+                                <div class="secondColumn">
+                                    <input class="inputText" type="text" name="firstName" id="firstName"/>
+                                </div>
+                            </div>
+                            <div id="flySecondRow">
+                                <div class="firstColumn">
+                                    Last Name : 
+                                </div>
+                                <div class="secondColumn">
+                                    <input class="inputText" type="text" name="lastName" id="lastName"/>
+                                </div>
+                            </div>
+                            <div id="flyThirdRow">
+                                <div class="firstColumn">
+                                About You:  
+                                </div>
+                                 <div class="secondColumn">
+                                    <textarea class="inputText" name="aboutYou" id="aboutYou"></textarea>
+                                 </div>
+                            </div>
+                            <div id="flyForthRow">
+                                <div class="firstColumn">
+                                You live in:
+                                </div>
+                                <div class="secondColumn">
+                                    <input class="inputText" type="text" name="city" id="city"/>
+                                </div>
+                          </div>
+                          <div id="flyFifthRow">
+                              <div class="firstColumn">
+                                Your school: 
+                              </div>
+                              <div class="secondColumn">
+                                <input class="inputText" type="text" name="school" id="school"/>
+                              </div>
+                          </div>
+                          <div id="flySixthRow">
+                              <div class="firstColumn">
+                                Your favorite quote: 
+                              </div>
+                              <div class="secondColumn">
+                                <textarea class="inputText" name="quote" id="quote"></textarea>
+                              </div>
+                          </div>
+                          <div id="flySeventhRow">
+                              <div class="firstColumn">
+                                Your hobbies:
+                              </div>
+                              <div class="secondColumn">
+                                <textarea class="inputText" name="hobbies" id="hobbies"></textarea>
+                              </div>
+                          </div>
+                          <div id="flyEightRow">
+                              <div class="firstColumn">
+                                Upload your pic:
+                              </div>
+                              <div class="secondColumn">
+                                <input class="inputText" type="file" name="profilePic" id="profilePic" />
+                              </div>
+                          </div>  
+                            <div id="flySubmit" style="text-align: right;padding-right: 50px;padding-top: 20px;">
+                                <input type="submit" value="Generate"/>
+                            </div>
+                        </form>
+                    </div>
+		</div>
+	</div>
         <div id="footerWrapper" style="clear: both;margin-top: 100px;width: 100%;background-color: #999;height: 80px;">
             <div id="footer" style="width: 900px;margin: auto;">
                 <div id="footerLinks" style="padding-top: 30px;text-align: center;">
@@ -85,6 +161,13 @@ line-height: 18px;">
             </div>
         </div>
     </div>
-
+    <script src="https://www.google.com/jsapi"></script>
+    <script>
+        google.load('jquery', '1.3.2');
+    </script>
+    <script type="text/javascript" src="/js/jquery.colorbox-min.js"></script>
+    <script type="text/javascript">
+        $(".inline").colorbox({inline:true, width:"50%"});
+    </script>
 </body>
 </html>

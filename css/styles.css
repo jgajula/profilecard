@@ -17,3 +17,10 @@ root {
 
 .albumEntry{ box-shadow: 3px 3px 4px #000; }
 .albumEntry:hover {border: 1px solid white;}
+.inputText {width: 230px;
+padding: 12px 34px;
+text-align: center;
+font-size: 14px;
+border: 1px solid #D9D9D9;
+color: black;
+background: white;}
