@@ -168,6 +168,58 @@ line-height: 18px;">
     <script type="text/javascript" src="/js/jquery.colorbox-min.js"></script>
     <script type="text/javascript">
         $(".inline").colorbox({inline:true, width:"50%"});
+        $('#onTheFlyForm').submit(function(){
+            var firstName = $('#firstName').val();
+            var lastName = $('#lastName').val();
+            var aboutYou = $('#aboutYou').val();
+            var city = $('#city').val();
+            var school = $('#school').val();
+            var quote = $('#quote').val();
+            var hobbies = $('#hobbies').val();
+            var profilePic = $('#profilePic').val();
+            alert(firstName+lastName+aboutYou+city+school+quote+hobbies+'----'+profilePic);
+            
+                var formData = new FormData($('form')[0]);
+                for(key in formData){
+                    alert(key+'='+formData[key]);
+                }
+                alert(formData);
+            $.ajax({
+                url: 'upload.php',  //server script to process data
+                type: 'POST',
+                xhr: function() {  // custom xhr
+                myXhr = $.ajaxSettings.xhr();
+                if(myXhr.upload){ // check if upload property exists
+                   // myXhr.upload.addEventListener('progress',progressHandlingFunction, false); // for handling the progress of the upload
+                }
+                return myXhr;
+            },
+            //Ajax events
+            //beforeSend: beforeSendHandler,
+            success: completeHandler,
+            //error: errorHandler,
+            // Form data
+            data: formData,
+            //Options to tell JQuery not to process data or worry about content-type
+            cache: false,
+            contentType: false,
+            processData: false
+            });
+            
+            alert('ajax completed');
+            
+            //document.write("<img src='"+profilePic+"'/>");
+            return false;});
+        
+        
+            function completeHandler(jqXHR, textStatus){
+                alert('request completed');
+            }
+            
+            function errorHanlder(jqXHR, textStatus, errorThrown){
+                alert('error occured');
+            }
+        
     </script>
 </body>
 </html>
