@@ -4,6 +4,8 @@
         <link href="/css/styles.css" rel="stylesheet" type="text/css">
         <link media="screen" rel="stylesheet" href="css/colorbox.css" />
     </head>
+  
+  
     
 <body style="margin: 0px;font: 12px/18px 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;
 font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;
@@ -12,6 +14,85 @@ font-style: normal;
 font-variant: normal;
 font-weight: normal;
 line-height: 18px;">
+    
+    <?php if(!empty($_POST['firstName'])){
+    
+    echo "First Name is".$_POST['firstName'];
+    $target_path = "/images/users/";
+    print_r($_FILES['profilePic']);
+$target_path = $target_path . basename( $_FILES['profilePic']['name']); 
+
+try{
+$target_path = "images/users/";
+
+$target_path = $target_path . basename( $_FILES['uploadedfile']['name']); 
+
+if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path)) {
+    echo "The file ".  basename( $_FILES['uploadedfile']['name']). 
+    " has been uploaded";
+} else{
+    echo "There was an error uploading the file, please try again!";
+}
+}catch(Exception $e){
+    echo $e->getMessage();
+}
+
+echo "<img src='".$target_path."'/>";
+
+
+
+
+    }
+    
+    $target_path = "images/users/profilePic.png";
+    $firstName = "Jagadeesh";
+$lastName = "Gajula";
+$aboutYou = "This is about me. its jagadeesh, i like to dance,i work as a software engineer, and i live in los angels.";
+$city = "Los Angels, CA";
+$school = "University of Illinois at Chicago";
+$quote = "Dream is not what you see in sleep, its what does not let you sleep!";
+$hobbies = "Dancing,Singing,Camping";
+    
+    ?>
+    
+    <div id="customImageHolderWrapper" style="margin: auto;background-image: url(images/tajTemplate.png); height: 400px; width: 600px;">
+        <div id="customFirstRow" style="padding-left: 10px;padding-top: 10px;">
+            <div id="customPic" style="float: left;">
+                <img src="<?php echo $target_path?>" style="width: 100px;"/>
+            </div>
+            <div id="customName" style="text-transform: uppercase;font-size: 20px;margin-top: -10px;padding-left: 10px;line-height: 10px;float:left;">
+                <p><?php echo $firstName?></p>
+                <p><?php echo $lastName?></p>
+            </div>
+            <div id="customAbout" style="clear: right;text-align: right;">
+                <div id="innerAboutDiv" style="width: 300px;float: right;padding-right: 10px;padding-top: 5px;">  
+                <span><?php echo $aboutYou?></span>
+                </div>
+            </div>
+        </div>
+        <div id="customSecondRow">
+            
+        </div>
+        <div id="customThirdRow" style="clear: left;margin-top: 320px;color: white;padding-left: 10px;">
+            <div  id="thridLeftCorner" style="width: 250px;float: left;border-right: solid 1px white;margin-right: 10px;">
+                <div id="customCity">
+                    <span><?php echo "LIVING: ".$city?></span>
+                </div>
+                <div id="customSchool">
+                    <span><?php echo "SCHOOL: ".$school?></span>
+                </div>
+                <div id="customCity">
+                    <span><?php echo $hobbies?></span>
+                </div> 
+                
+            </div>
+            <div id="thirdRightCorner">
+                <span><?php echo $quote?></span>
+            </div>
+        </div>
+    </div>
+    
+    
     <div id="bodyWrapper">
         <div id="headerWrapper">
             <div id="header" style="width:100%;background-color: #fdb82b;height:80px;">
@@ -81,7 +162,7 @@ line-height: 18px;">
         <div style='display:none'>
 		<div id='onTheFlyContentWrapper' style='padding:10px; background:#fff;'>
                     <div id="onTheFlyContent" style="width: 350px;margin: auto;">
-                        <form name="onTheFlyForm" id="onTheFlyForm" action="#" method="POST">
+                        <form enctype="multipart/form-data" name="onTheFlyForm" id="onTheFlyForm" action="/index.php" method="POST">
                             <div id="flyFirstRow">
                                 <div class="firstColumn">
                                     First Name: 
@@ -143,7 +224,8 @@ line-height: 18px;">
                                 Upload your pic:
                               </div>
                               <div class="secondColumn">
-                                <input class="inputText" type="file" name="profilePic" id="profilePic" />
+<!--                                <input  type="file" name="profilePic" id="profilePic" />-->
+                                <input class="inputText" name="uploadedfile" type="file" />
                               </div>
                           </div>  
                             <div id="flySubmit" style="text-align: right;padding-right: 50px;padding-top: 20px;">
@@ -168,7 +250,7 @@ line-height: 18px;">
     <script type="text/javascript" src="/js/jquery.colorbox-min.js"></script>
     <script type="text/javascript">
         $(".inline").colorbox({inline:true, width:"50%"});
-        $('#onTheFlyForm').submit(function(){
+        $('#onTheFlyFormTest').submit(function(){
             var firstName = $('#firstName').val();
             var lastName = $('#lastName').val();
             var aboutYou = $('#aboutYou').val();
