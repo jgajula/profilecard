@@ -15,45 +15,56 @@ font-variant: normal;
 font-weight: normal;
 line-height: 18px;">
     
-    <?php if(!empty($_POST['firstName'])){
+  <?php include 'imageGenerate.php'; ?>  
     
-    echo "First Name is".$_POST['firstName'];
-    $target_path = "/images/users/";
-    print_r($_FILES['profilePic']);
-$target_path = $target_path . basename( $_FILES['profilePic']['name']); 
-
-try{
-$target_path = "images/users/";
-
-$target_path = $target_path . basename( $_FILES['uploadedfile']['name']); 
-
-if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path)) {
-    echo "The file ".  basename( $_FILES['uploadedfile']['name']). 
-    " has been uploaded";
-} else{
-    echo "There was an error uploading the file, please try again!";
-}
-}catch(Exception $e){
-    echo $e->getMessage();
-}
-
-echo "<img src='".$target_path."'/>";
-
-
-
-
+<?php if(!empty($_POST['firstName'])){
+    
+    $firstName = $_POST['firstName'];
+    $lastName = $_POST['lastName'];
+    $statusMessage = $_POST['aboutYou']; 
+    $originalProfilePath = 'original'.time();
+    $target_path = "/images/tmp/";
+    //print_r($_FILES['profilePic']);
+    $target_path = $target_path .$originalProfilePath.basename( $_FILES['profilePic']['name']); 
+    try{
+        $target_path = "images/tmp/";
+        $target_path = $target_path .$originalProfilePath. basename( $_FILES['uploadedfile']['name']); 
+        if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path)) {
+            // echo "The file ".  basename( $_FILES['uploadedfile']['name']). 
+            // " has been uploaded";
+        } else{
+            echo "There was an error uploading the file, please try again!";
+        }
+    }catch(Exception $e){
+        echo $e->getMessage();
     }
+
     
-    $target_path = "images/users/profilePic.png";
-    $firstName = "Jagadeesh";
-$lastName = "Gajula";
+    
+    $content['status'] = $statusMessage;
+    $profileCardPath = generateProfileCard($target_path,$firstName,$lastName,$content);
+    
+    
+    
+    echo "<img src='".$profileCardPath."'/>";
+   // echo "first name = ".$firstName."---last name = ".$lastName.'---- status messagge = '.$statusMessage;
+}
+    
+
+
+
+
+
+//    $target_path = "images/users/profilePic.png";
+//    $firstName = "Jagadeesh";
+//$lastName = "Gajula";
 $aboutYou = "This is about me. its jagadeesh, i like to dance,i work as a software engineer, and i live in los angels.";
 $city = "Los Angels, CA";
 $school = "University of Illinois at Chicago";
 $quote = "Dream is not what you see in sleep, its what does not let you sleep!";
 $hobbies = "Dancing,Singing,Camping";
     
-    ?>
+?>
     
     <div id="customImageHolderWrapper" style="margin: auto;background-image: url(images/tajTemplate.png); height: 400px; width: 600px;">
         <div id="customFirstRow" style="padding-left: 10px;padding-top: 10px;">
@@ -184,42 +195,10 @@ $hobbies = "Dancing,Singing,Camping";
                                 About You:  
                                 </div>
                                  <div class="secondColumn">
-                                    <textarea class="inputText" name="aboutYou" id="aboutYou"></textarea>
+                                    <textarea class="inputText" style="height: 200px;" name="aboutYou" id="aboutYou"></textarea>
                                  </div>
                             </div>
-                            <div id="flyForthRow">
-                                <div class="firstColumn">
-                                You live in:
-                                </div>
-                                <div class="secondColumn">
-                                    <input class="inputText" type="text" name="city" id="city"/>
-                                </div>
-                          </div>
-                          <div id="flyFifthRow">
-                              <div class="firstColumn">
-                                Your school: 
-                              </div>
-                              <div class="secondColumn">
-                                <input class="inputText" type="text" name="school" id="school"/>
-                              </div>
-                          </div>
-                          <div id="flySixthRow">
-                              <div class="firstColumn">
-                                Your favorite quote: 
-                              </div>
-                              <div class="secondColumn">
-                                <textarea class="inputText" name="quote" id="quote"></textarea>
-                              </div>
-                          </div>
-                          <div id="flySeventhRow">
-                              <div class="firstColumn">
-                                Your hobbies:
-                              </div>
-                              <div class="secondColumn">
-                                <textarea class="inputText" name="hobbies" id="hobbies"></textarea>
-                              </div>
-                          </div>
-                          <div id="flyEightRow">
+                            <div id="flyEightRow">
                               <div class="firstColumn">
                                 Upload your pic:
                               </div>
@@ -227,7 +206,7 @@ $hobbies = "Dancing,Singing,Camping";
 <!--                                <input  type="file" name="profilePic" id="profilePic" />-->
                                 <input class="inputText" name="uploadedfile" type="file" />
                               </div>
-                          </div>  
+                            </div>  
                             <div id="flySubmit" style="text-align: right;padding-right: 50px;padding-top: 20px;">
                                 <input type="submit" value="Generate"/>
                             </div>
