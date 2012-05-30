@@ -41,7 +41,7 @@ $generatedImagePath = 'images/tmp/'.$generatedImagePath;
 imagepng($im,$generatedImagePath);
 imagedestroy($im);
 
-return $generatedImagePath;
+return $generatedImagePath; 
 
 }
 
@@ -69,6 +69,77 @@ function getContentStyles(){
     $style['status']['blue'] = 255;
     
     return $style;
+}
+
+
+function addProfilePic($profileImagePath,$generatedImageName){
+    
+    
+$stamp = imagecreatefrompng($profileImagePath);
+
+
+
+$im = imagecreatefrompng($generatedImageName);
+
+// Set the margins for the stamp and get the height/width of the stamp image
+$marge_right = 10;
+$marge_bottom = 10;
+$sx = imagesx($stamp);
+$sy = imagesy($stamp);
+
+
+
+
+
+
+
+// Copy the stamp image onto our photo using the margin offsets and the photo 
+// width to calculate positioning of the stamp. 
+imagecopy($im, $stamp, 10, 10, 0, 0, imagesx($stamp), imagesy($stamp));
+
+// Output and free memory
+$generatedProfileImagePath = time().'.png';
+$generatedProfileImagePath = 'images/tmp/profile'.$generatedProfileImagePath;
+imagepng($im,$generatedProfileImagePath);
+imagedestroy($im);
+
+return $generatedProfileImagePath;
+}
+
+
+
+function resizeProfilePic($profilePicPath){
+    
+ $original = imagecreatefrompng($profilePicPath);
+
+
+try{
+$percent = 0.5;
+list($width, $height) = getimagesize($profilePicPath);
+$newwidth = $width * $percent;
+$newheight = $height * $percent;
+
+//echo $newheight;
+// Load
+$thumb = imagecreatetruecolor($newwidth, $newheight);
+$source = $original;
+
+// Resize
+imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+
+
+$resizedImagePath = time().'.png';
+$resizedImagePath = 'images/tmp/profileResize'.$resizedImagePath;
+
+//$stamp = $thumb;
+imagepng($thumb,$resizedImagePath);
+
+return $resizedImagePath;
+//echo $newheight;
+}catch(Exception $e){
+    echo $e->getMessage();
+}
+    
 }
 
 
