@@ -11,37 +11,37 @@
 
 function generateImage($imagePath,$contentText,$contentStyles){
     
-    //$contentText = getContentText();
+        //$contentText = getContentText();
     $statusText = $contentText['status'];
     $backgroundImagePath = $imagePath;
-    //$contentStyles = getContentStyles();
-// try changing this as well
-$fontSize = $contentStyles['status']['size'];
-$width = imagefontwidth($fontSize) * strlen($statusText);
-$height = imagefontheight($fontSize) ;
-$im = imagecreatefrompng($backgroundImagePath);
+        //$contentStyles = getContentStyles();
+    // try changing this as well
+    $fontSize = $contentStyles['status']['size'];
+    $width = imagefontwidth($fontSize) * strlen($statusText);
+    $height = imagefontheight($fontSize) ;
+    $im = imagecreatefrompng($backgroundImagePath);
 
 
-$red = imagecolorallocate($im, 0xFF, 0x00, 0x00);
-$fontColor = imagecolorallocate($im, $contentStyles['status']['red'], $contentStyles['status']['green'],$contentStyles['status']['blue']);
+    $red = imagecolorallocate($im, 0xFF, 0x00, 0x00);
+    $fontColor = imagecolorallocate($im, $contentStyles['status']['red'], $contentStyles['status']['green'],$contentStyles['status']['blue']);
 
-// Make the background red
-//imagefilledrectangle($im, 0, 0, 299, 99, $red);
+    // Make the background red
+    //imagefilledrectangle($im, 0, 0, 299, 99, $red);
 
-// Path to our ttf font file
-$font_file = $contentStyles['status']['font'];
+    // Path to our ttf font file
+    $font_file = $contentStyles['status']['font'];
 
-// Draw the text 'PHP Manual' using font size 13
-imagefttext($im, $fontSize, $contentStyles['status']['angle'], $contentStyles['status']['x'], $contentStyles['status']['y'], $fontColor, $font_file, $statusText);
+    // Draw the text 'PHP Manual' using font size 13
+    imagefttext($im, $fontSize, $contentStyles['status']['angle'], $contentStyles['status']['x'], $contentStyles['status']['y'], $fontColor, $font_file, $statusText);
 
-// Output image to the browser
-//header('Content-Type: image/png');
-$generatedImagePath = time().'.png';
-$generatedImagePath = 'images/tmp/'.$generatedImagePath;
-imagepng($im,$generatedImagePath);
-imagedestroy($im);
+    // Output image to the browser
+    //header('Content-Type: image/png');
+    $generatedImagePath = time().'.png';
+    $generatedImagePath = 'images/tmp/'.$generatedImagePath;
+    imagepng($im,$generatedImagePath);
+    imagedestroy($im);
 
-return $generatedImagePath; 
+    return $generatedImagePath;
 
 }
 
@@ -67,6 +67,16 @@ function getContentStyles(){
     $style['status']['red'] = 255;
     $style['status']['green'] = 255;
     $style['status']['blue'] = 255;
+    $style['name']['size'] = 13;
+    $style['name']['red'] = 0;
+    $style['name']['green'] = 0;
+    $style['name']['blue'] = 0;
+    $style['name']['angle'] = 0;
+    $style['name']['font'] = 'arial.ttf';
+    $style['name']['fx'] = 90;
+    $style['name']['fy'] = 25;
+    $style['name']['lx'] = 90;
+    $style['name']['ly'] = 45;
     
     return $style;
 }
@@ -74,73 +84,127 @@ function getContentStyles(){
 
 function addProfilePic($profileImagePath,$generatedImageName){
     
-    
-$stamp = imagecreatefrompng($profileImagePath);
+
+    $stamp = imagecreatefrompng($profileImagePath);
 
 
 
-$im = imagecreatefrompng($generatedImageName);
+    $im = imagecreatefrompng($generatedImageName);
 
-// Set the margins for the stamp and get the height/width of the stamp image
-$marge_right = 10;
-$marge_bottom = 10;
-$sx = imagesx($stamp);
-$sy = imagesy($stamp);
-
-
+    // Set the margins for the stamp and get the height/width of the stamp image
+    $marge_right = 10;
+    $marge_bottom = 10;
+    $sx = imagesx($stamp);
+    $sy = imagesy($stamp);
 
 
+    // Copy the stamp image onto our photo using the margin offsets and the photo 
+    // width to calculate positioning of the stamp. 
+    imagecopy($im, $stamp, 10, 10, 0, 0, imagesx($stamp), imagesy($stamp));
 
+    // Output and free memory
+    $generatedProfileImagePath = time().'.png';
+    $generatedProfileImagePath = 'images/tmp/profile'.$generatedProfileImagePath;
+    imagepng($im,$generatedProfileImagePath);
+    imagedestroy($im);
 
-
-// Copy the stamp image onto our photo using the margin offsets and the photo 
-// width to calculate positioning of the stamp. 
-imagecopy($im, $stamp, 10, 10, 0, 0, imagesx($stamp), imagesy($stamp));
-
-// Output and free memory
-$generatedProfileImagePath = time().'.png';
-$generatedProfileImagePath = 'images/tmp/profile'.$generatedProfileImagePath;
-imagepng($im,$generatedProfileImagePath);
-imagedestroy($im);
-
-return $generatedProfileImagePath;
+    return $generatedProfileImagePath;
 }
 
 
 
 function resizeProfilePic($profilePicPath){
     
- $original = imagecreatefrompng($profilePicPath);
+     $original = imagecreatefrompng($profilePicPath);
 
 
-try{
-$percent = 0.5;
-list($width, $height) = getimagesize($profilePicPath);
-$newwidth = $width * $percent;
-$newheight = $height * $percent;
+    try{
+    $percent = 0.5;
+    list($width, $height) = getimagesize($profilePicPath);
+    $newwidth = $width * $percent;
+    $newheight = $height * $percent;
 
-//echo $newheight;
-// Load
-$thumb = imagecreatetruecolor($newwidth, $newheight);
-$source = $original;
+    //echo $newheight;
+    // Load
+    $thumb = imagecreatetruecolor($newwidth, $newheight);
+    $source = $original;
 
-// Resize
-imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+    // Resize
+    imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
 
 
-$resizedImagePath = time().'.png';
-$resizedImagePath = 'images/tmp/profileResize'.$resizedImagePath;
+    $resizedImagePath = time().'.png';
+    $resizedImagePath = 'images/tmp/profileResize'.$resizedImagePath;
 
-//$stamp = $thumb;
-imagepng($thumb,$resizedImagePath);
+    //$stamp = $thumb;
+    imagepng($thumb,$resizedImagePath);
 
-return $resizedImagePath;
-//echo $newheight;
-}catch(Exception $e){
-    echo $e->getMessage();
-}
+    return $resizedImagePath;
+    //echo $newheight;
+    }catch(Exception $e){
+        echo $e->getMessage();
+    }
     
 }
 
+
+function addName($imagePath,$name,$pos,$contentStyles){
+    
+    try{
+        
+    $statusText = $name;
+    $backgroundImagePath = $imagePath;
+        //$contentStyles = getContentStyles();
+    // try changing this as well
+    $fontSize = $contentStyles['name']['size'];
+    $width = imagefontwidth($fontSize) * strlen($statusText);
+    $height = imagefontheight($fontSize) ;
+    $im = imagecreatefrompng($backgroundImagePath);
+
+
+    $red = imagecolorallocate($im, 0xFF, 0x00, 0x00);
+    $fontColor = imagecolorallocate($im, $contentStyles['name']['red'], $contentStyles['name']['green'],$contentStyles['name']['blue']);
+
+    // Make the background red
+    //imagefilledrectangle($im, 0, 0, 299, 99, $red);
+
+    // Path to our ttf font file
+    $font_file = $contentStyles['name']['font'];
+
+    // Draw the text 'PHP Manual' using font size 13
+    if($pos == "first"){
+        imagefttext($im, $fontSize, $contentStyles['name']['angle'], $contentStyles['name']['fx'], $contentStyles['name']['fy'], $fontColor, $font_file, $statusText);
+    }else{
+        imagefttext($im, $fontSize, $contentStyles['name']['angle'], $contentStyles['name']['lx'], $contentStyles['name']['ly'], $fontColor, $font_file, $statusText);
+    }
+    // Output image to the browser
+    //header('Content-Type: image/png');
+    $generatedImagePath = time().'.png';
+    $generatedImagePath = 'images/tmp/afterName'.$generatedImagePath;
+    imagepng($im,$generatedImagePath);
+    imagedestroy($im);
+    }catch(Exception $e){
+        echo $e->getMessage();
+    }
+    return $generatedImagePath;
+    
+    
+}
+
+
+function getProfilePicPath(){
+    
+    return 'images/profilePic.png';
+}
+
+function getFirstName(){
+    
+    return "Jagadeesh";
+}
+
+function getLastName(){
+    
+    return "Gajula";
+}
 
 ?>
